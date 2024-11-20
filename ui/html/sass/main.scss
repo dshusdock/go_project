@@ -1,8 +1,8 @@
 @import "./abstracts/mixins";
 @import "./abstracts/variables";
-@import "./base/base";
-@import "./base/animations";
-@import "./base/utilities";
-@import "./base/typography";
-@import "./pages/home";
-@import "./pages/login";
+@import "./utils/animations";
+@import "./utils/utilities";
+@import "./utils/typography";
+@import "./views/base/home";
+@import "./views/layout/grid";
+

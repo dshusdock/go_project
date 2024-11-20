@@ -41,7 +41,6 @@ func RenderTemplate_new(w http.ResponseWriter, r *http.Request, data any, _type 
 	ptr := constants.RENDERED_FILE_MAP()
 	fmt.Println("In RenderTemplate_new - Type: ", _type)
 
-
 	var tmplFiles []string
 	var tmplName string
 

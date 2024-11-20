@@ -1,12 +1,12 @@
 import Alpine from 'alpinejs'
-import login from './login'
+import test from './test'
 
-Alpine.data('login', login)
+Alpine.data('test', test)
 
 window.Alpine = Alpine
 
 Alpine.start()
 
-console.log("Release the hounds!!......again!");
+console.log("Release the hounds!!......again!...");
 
 

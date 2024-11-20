@@ -69,7 +69,8 @@ type RenderedFileMap struct {
 func RENDERED_FILE_MAP() *RenderedFileMap {
 	return &RenderedFileMap{
 		HOME: []string{
-			"./ui/html/pages/base.tmpl",
+			"./ui/html/views/base.tmpl",
+			"./ui/html/views/layout.tmpl",
 		},
 		NONE: []string{
 			"",	

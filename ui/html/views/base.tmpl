@@ -15,7 +15,13 @@
 </head>
 
 <body>
- <p>This is a test</p>
+  <div class="" x-data="test">
+    <p  @click="onTestClick($event)">This is a test</p>
+    <div class="">
+      {{ template "layout" . }}
+    </div>
+  </div>
+ 
     
   <script src="/html/dist/main.js"></script>
 </body>
