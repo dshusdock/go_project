@@ -24,3 +24,16 @@ p {
   font-size: 1.6rem;
   line-height: 1.5;
 }
+
+.main-div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  & button {
+    margin: 1rem;
+    width: 10rem;
+    height: 3rem;
+    border-radius: 1rem;
+  }
+}

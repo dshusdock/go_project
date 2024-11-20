@@ -50,6 +50,8 @@ func main() {
 	var programLevel = new(slog.LevelVar)
 	programLevel.Set(slog.LevelDebug)
 
+	// Need dev_cert.crt and dev_key.key in project root
+
 	// slog.Info("Starting application -", "Port", portNumber)
 	slog.Info("Starting application -", "Port", secPortNumber)
 	srv := &http.Server{
