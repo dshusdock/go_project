@@ -1,0 +1,26 @@
+// RESET
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  // This defines what 1 rem is.
+  font-size: 62.5%;
+  min-height: 100%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: #376ba0;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+p {
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
