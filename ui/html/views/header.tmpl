@@ -1,0 +1,33 @@
+{{define "header"}}
+
+<div class="app-header">
+  <div class="app-header__title">
+    <h2>Lab Environments</h2>
+  </div>
+  <div 
+    class="app-header__nav"
+    hx-post="/element/event/click"
+    hx-swap="innerHTML"
+    hx-target=".main"
+    hx-trigger="click"
+    hx-vals='js:{
+    "type": "button",
+    "label": event.target.parentElement.dataset.lbl,
+    "view_id": "headervw",
+    "view_str": "" }'
+    >
+    <div class="hdr-btn" data-lbl="add-item">
+      <i class="fa-solid fa-circle-plus"></i>
+      <span>Add Item</span>
+    </div>
+    <div class="hdr-btn" data-lbl="settings">
+      <i class="fa-solid fa-gear"></i>
+      <span>Settings</span>
+    </div>
+    <div class="hdr-btn" data-lbl="dave">
+      <i class="fa-solid fa-user"></i>
+      <span>Dave</span>
+    </div>
+  </div>
+</div>
+{{ end }}

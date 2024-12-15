@@ -61,7 +61,8 @@ func main() {
 	}
 
 	// err := srv.ListenAndServe()
-	err := srv.ListenAndServeTLS("dev_cert.crt", "dev_key.key")
+	// err := srv.ListenAndServeTLS("dev_cert.crt", "dev_key.key")
+	err := srv.ListenAndServeTLS("localhost.crt", "localhost.key")
 	if err != nil {
 		log.Fatal(err)
 	}

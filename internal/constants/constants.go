@@ -1,6 +1,7 @@
 package constants
 
 import (
+	"context"
 	"net/http"
 )
 
@@ -66,11 +67,22 @@ type RenderedFileMap struct {
 	NONE           []string
 }
 
+type AppEvent struct {
+	ViewId 		string
+	Type   		string
+	Label  		string
+	EventId 	string
+	EventStr 	string
+	Context 	context.Context
+
+}
+
 func RENDERED_FILE_MAP() *RenderedFileMap {
 	return &RenderedFileMap{
 		HOME: []string{
 			"./ui/html/views/base.tmpl",
 			"./ui/html/views/layout.tmpl",
+			"./ui/html/views/header.tmpl",
 		},
 		NONE: []string{
 			"",	

@@ -7,6 +7,14 @@
   box-sizing: inherit;
 }
 
+:root {
+  --color-1: #443294;
+  --color-2: #D3D8DF;
+  --color-3: #354976;
+  --color-4: #7C7A7A;
+  --color-5: #FFFFFF;
+}
+
 html {
   // This defines what 1 rem is.
   font-size: 62.5%;
@@ -15,8 +23,7 @@ html {
 
 body {
   box-sizing: border-box;
-  background-color: #376ba0;
-  min-height: 100%;
+  background-color: var(--color-4);
   overflow: hidden;
 }
 

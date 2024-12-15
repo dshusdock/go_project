@@ -6,8 +6,10 @@ import (
 	"dshusdock/go_project/internal/render"
 	"dshusdock/go_project/internal/services/messagebus"
 	"dshusdock/go_project/internal/views/base"
+	headervw "dshusdock/go_project/internal/views/header"
 	"fmt"
 	"net/http"
+	"net/url"
 )
 
 type RenderView struct {
@@ -30,6 +32,7 @@ type DisplayData struct {
 func InitRouteHandlers() {
 	// Register the views
 	RenderViewSvc.ViewHandlers["basevw"] = base.AppBaseVw.RegisterHandler()
+	RenderViewSvc.ViewHandlers["headervw"] = headervw.AppHeaderVw.RegisterHandler()
 }
 
 func NewRenderViewSvc(app *config.AppConfig) *RenderView {
@@ -45,9 +48,27 @@ func NewRenderViewSvc(app *config.AppConfig) *RenderView {
 	
 }
 
+var APP_VIEWS = make (map[string][]string)
+
+
+func (rv *RenderView) ProcessClickEvent(w http.ResponseWriter, event constants.AppEvent) {
+	fmt.Println("Processing Click Event")
+	APP_VIEWS["headervw_button_add-item"] = []string{"headervw", }
+
+	for _, v := range APP_VIEWS[event.EventStr] {
+		rslt = rv.ViewHandlers[v].HandleRequest(w, r)
+	}
+
+}
+
+
 func (rv *RenderView) ProcessRequest(w http.ResponseWriter, r *http.Request, view string) {
+	fmt.Println("========================[renderview] - ProcessRequest - [", view, "]========================")
+
 	var rslt any
 	var _view int
+
+	rv.ProcessEvent(w, r, view)
 	
 	obj := DisplayData{
 		Base: base.BaseTemplateparams{},
@@ -87,7 +108,39 @@ func (rv *RenderView) HandleMBusRequest(w http.ResponseWriter, r *http.Request) 
 	}
 }
 
+func (rv *RenderView) ProcessEvent(w http.ResponseWriter, r *http.Request, view string) {
+	fmt.Println("========================[renderview] - ProcessEvent - [", view, "]========================")
+
+	d := r.PostForm
+	s := d.Get("label")
+	fmt.Println("Label: ", s)
+
+	eventStr := createEventStr(view, d)
+	fmt.Println("EventStr: ", eventStr)
+
+	switch eventStr {
+		case "headervw_button_add-item":		
+			fmt.Println("Add item button clicked")
+			
+
+		case "headervw":
+			
+		default:
+		}
+
+}
+
+func createEventStr(view string, d url.Values) string {
+	return view + "_" + d.Get("type") + "_" + d.Get("label")
+}
+
+
+
 func (rv *RenderView) RenderTemplate(w http.ResponseWriter, data any, view int) {
 	render.RenderTemplate_new(w, nil, data, view)
+}
+
+func (rv *RenderView) RegisterHandler(w http.ResponseWriter, data any, view int) {
+	
 }
 

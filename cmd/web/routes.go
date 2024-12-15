@@ -24,12 +24,14 @@ func routes(app *config.AppConfig) http.Handler {
 		r.Use(jwtauth.Verifier(jwtauthsvc.GetToken()))
 		r.Use(jwtauth.Authenticator(jwtauthsvc.GetToken()))	
 			
-		r.Post("/element/event/click", handlers.Repo.HandleClickEvents)
+		//r.Post("/element/event/click", handlers.Repo.HandleClickEvents)
 		
 	})
 	
 	// Unprotected routes
 	mux.Get("/", handlers.Repo.Base)
+
+	mux.Post("/element/event/click", handlers.Repo.HandleClickEvents)
 
 	fileServer := http.FileServer(http.Dir("./ui/html/"))
 	mux.Handle("/html/*", http.StripPrefix("/html", fileServer))
