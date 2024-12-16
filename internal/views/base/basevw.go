@@ -46,7 +46,7 @@ func init() {
 	gob.Register(BaseVwData{})
 }
 
-func (m *BaseVw) RegisterView(app *config.AppConfig) constants.ViewInterface {
+func (m *BaseVw) RegisterView(app *config.AppConfig) *BaseVw {
 	log.Println("Registering AppLayoutVw...")
 	AppBaseVw.App = app
 	return AppBaseVw
@@ -56,29 +56,29 @@ func (m *BaseVw) RegisterHandler() constants.ViewHandler {
 	return &BaseVw{}
 }
 
-func (m *BaseVw) HandleHttpRequest(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("[lyoutvw] - Processing request")
-	CreateBaseVwData().ProcessHttpRequest(w, r)
-}
+// func (m *BaseVw) HandleHttpRequest(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("[lyoutvw] - Processing request")
+// 	CreateBaseVwData().ProcessHttpRequest(w, r)
+// }
 
-func (m *BaseVw) HandleMBusRequest(w http.ResponseWriter, r *http.Request) any{
-	CreateBaseVwData().ProcessMBusRequest(w, r)
-	return nil
-}
+// func (m *BaseVw) HandleMBusRequest(w http.ResponseWriter, r *http.Request) any{
+// 	CreateBaseVwData().ProcessMBusRequest(w, r)
+// 	return nil
+// }
 
 // func (m *BaseVw) HandleRequest(w http.ResponseWriter, r *http.Request, c chan any, d chan int) {
-func (m *BaseVw) HandleRequest(w http.ResponseWriter, r *http.Request) any{	
+func (m *BaseVw) HandleRequest(w http.ResponseWriter, event constants.AppEvent) any{	
 	fmt.Println("[basevw] - HandleRequest")
 	var obj BaseVwData
 
-	if session.SessionSvc.SessionMgr.Exists(r.Context(), "basevw") {
-		obj = session.SessionSvc.SessionMgr.Pop(r.Context(), "basevw").(BaseVwData)
+	if session.SessionSvc.SessionMgr.Exists(event.Context, "basevw") {
+		obj = session.SessionSvc.SessionMgr.Pop(event.Context, "basevw").(BaseVwData)
 	} else {
 		obj = *CreateBaseVwData()	
 	}
-	obj.ProcessHttpRequest(w, r)	
+	obj.ProcessHttpRequest(w, event)	
 	
-	session.SessionSvc.SessionMgr.Put(r.Context(), "basevw", obj)
+	session.SessionSvc.SessionMgr.Put(event.Context, "basevw", obj)
 
 	return obj
 }
@@ -99,8 +99,8 @@ func CreateBaseVwData() *BaseVwData {
 	}
 }
 
-func (m *BaseVwData) ProcessHttpRequest(w http.ResponseWriter, r *http.Request) *BaseVwData{
-	fmt.Println("[lyoutvw] - Processing request")
+func (m *BaseVwData) ProcessHttpRequest(w http.ResponseWriter, event constants.AppEvent) *BaseVwData{
+	fmt.Println("[basevw] - Processing request")
 	m.View = constants.RM_HOME
 	return m // TEMPORARY
 }

@@ -5,8 +5,8 @@ import (
 	"dshusdock/go_project/internal/constants"
 	"dshusdock/go_project/internal/services/messagebus"
 	"dshusdock/go_project/internal/services/renderview"
-	"dshusdock/go_project/internal/views/base"
-	"dshusdock/go_project/internal/views/layoutvw"
+	//"dshusdock/go_project/internal/views/base"
+	//"dshusdock/go_project/internal/views/layoutvw"
 	"fmt"
 	"log"
 	"net/http"
@@ -23,8 +23,8 @@ type Repository struct {
 
 func initRouteHandlers() {
 	// Register the views
-	Repo.App.ViewCache["basevw"] = base.AppBaseVw.RegisterView(Repo.App)
-	Repo.App.ViewCache["lyoutvw"] = layoutvw.AppLayoutVw.RegisterView(Repo.App)
+	//Repo.App.ViewCache["basevw"] = base.AppBaseVw.RegisterView(Repo.App)
+	//Repo.App.ViewCache["lyoutvw"] = layoutvw.AppLayoutVw.RegisterView(Repo.App)
 
 }
 
@@ -81,10 +81,11 @@ func (m *Repository) HandleClickEvents(w http.ResponseWriter, r *http.Request) {
 			Label:  data.Get("label"),
 			EventId: constants.EVENT_CLICK,
 			EventStr: v_id + "_" + data.Get("type") + "_" + data.Get("label"),
+			Context: r.Context(),
 		},
 	)
 
-	renderview.RenderViewSvc.ProcessRequest(w, r, v_id)
+	//renderview.RenderViewSvc.ProcessRequest(w, r, v_id)
 }
 
 

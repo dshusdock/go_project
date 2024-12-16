@@ -53,12 +53,12 @@ var APP_VIEWS = make (map[string][]string)
 
 func (rv *RenderView) ProcessClickEvent(w http.ResponseWriter, event constants.AppEvent) {
 	fmt.Println("Processing Click Event")
-	APP_VIEWS["headervw_button_add-item"] = []string{"headervw", }
+	APP_VIEWS["headervw_button_add-item"] = []string{"headervw", "basevw"}
 
 	for _, v := range APP_VIEWS[event.EventStr] {
-		rslt = rv.ViewHandlers[v].HandleRequest(w, r)
+		_ = rv.ViewHandlers[v].HandleRequest(w, event)
 	}
-
+	fmt.Println("Processing Click Event - Done")
 }
 
 
@@ -68,7 +68,13 @@ func (rv *RenderView) ProcessRequest(w http.ResponseWriter, r *http.Request, vie
 	var rslt any
 	var _view int
 
-	rv.ProcessEvent(w, r, view)
+	//rv.ProcessEvent(w, r, view)
+
+	ev := constants.AppEvent{
+		Context: r.Context(),
+		EventId: constants.EVENT_STARTUP,
+		
+	}
 	
 	obj := DisplayData{
 		Base: base.BaseTemplateparams{},
@@ -78,7 +84,7 @@ func (rv *RenderView) ProcessRequest(w http.ResponseWriter, r *http.Request, vie
 	if (false) { // some special condition) 
 		// do something special that returns rslt
 	} else {
-		rslt = rv.ViewHandlers[view].HandleRequest(w, r)
+		rslt = rv.ViewHandlers[view].HandleRequest(w, ev)
 	}
 	obj.Tmplt[view] = &rslt
 

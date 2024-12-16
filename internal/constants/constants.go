@@ -3,6 +3,7 @@ package constants
 import (
 	"context"
 	"net/http"
+	
 )
 
 const (
@@ -12,6 +13,7 @@ const (
 )
 
 const (
+	EVENT_STARTUP = "Event_Startup"
 	EVENT_CLICK  = "Event_Click"
 )
 
@@ -40,8 +42,8 @@ type ViewInterface interface {
 }
 
 type ViewHandler interface {
-	HandleRequest(w http.ResponseWriter, r *http.Request) any
-	HandleMBusRequest(w http.ResponseWriter, r *http.Request) any
+	HandleRequest(w http.ResponseWriter, event AppEvent) any
+	//HandleMBusRequest(w http.ResponseWriter, r *http.Request) any
 }
 
 type ViewInfo struct {

@@ -3,7 +3,7 @@ package headervw
 import (
 	"dshusdock/go_project/config"
 	"dshusdock/go_project/internal/constants"
-	"dshusdock/go_project/internal/services/messagebus"
+	//"dshusdock/go_project/internal/services/messagebus"
 	"dshusdock/go_project/internal/services/session"	
 	b "dshusdock/go_project/internal/views/base"
 	
@@ -27,7 +27,7 @@ func init() {
 		App: nil,
 	}
 	gob.Register(HeaderVwData{})
-	messagebus.GetBus().Subscribe("Event:ViewChange", AppHeaderVw.HandleMBusRequest)
+	//messagebus.GetBus().Subscribe("Event:ViewChange", AppHeaderVw.HandleMBusRequest)
 }
 
 func (m *HeaderVw) RegisterView(app *config.AppConfig) *HeaderVw{
@@ -40,30 +40,30 @@ func (m *HeaderVw) RegisterHandler() constants.ViewHandler {
 	return &HeaderVw{}
 }
 
-func (m *HeaderVw) HandleHttpRequest(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("[lyoutvw] - Processing request")
-	CreateHeaderVwData().ProcessHttpRequest(w, r)
+// func (m *HeaderVw) HandleHttpRequest(w http.ResponseWriter, r *http.Request) {
+// 	fmt.Println("[lyoutvw] - Processing request")
+// 	CreateHeaderVwData().ProcessHttpRequest(w, r)
 
-	// render.RenderModal(w, nil, nil)
-}
+// 	// render.RenderModal(w, nil, nil)
+// }
 
-func (m *HeaderVw) HandleMBusRequest(w http.ResponseWriter, r *http.Request) any{
-	CreateHeaderVwData().ProcessMBusRequest(w, r)
-	return nil
-}
+// func (m *HeaderVw) HandleMBusRequest(w http.ResponseWriter, r *http.Request) any{
+// 	CreateHeaderVwData().ProcessMBusRequest(w, r)
+// 	return nil
+// }
 
-func (m *HeaderVw) HandleRequest(w http.ResponseWriter, r *http.Request) any {
+func (m *HeaderVw) HandleRequest(w http.ResponseWriter, event constants.AppEvent) any{
 	fmt.Println("[HeaderVw] - HandleRequest")
 	var obj HeaderVwData
 
-	if session.SessionSvc.SessionMgr.Exists(r.Context(), "layoutvw") {
-		obj = session.SessionSvc.SessionMgr.Pop(r.Context(), "headervw").(HeaderVwData)
+	if session.SessionSvc.SessionMgr.Exists(event.Context,"layoutvw") {
+		obj = session.SessionSvc.SessionMgr.Pop(event.Context,"headervw").(HeaderVwData)
 	} else {
 		obj = *CreateHeaderVwData()	
 	}
 
-	obj.ProcessHttpRequest(w, r)	
-	session.SessionSvc.SessionMgr.Put(r.Context(), "headervw", obj)
+	obj.ProcessHttpRequest(w, event)	
+	session.SessionSvc.SessionMgr.Put(event.Context, "headervw", obj)
 
 	return obj
 }
@@ -87,7 +87,8 @@ func CreateHeaderVwData() *HeaderVwData {
 	}
 }
 
-func (m *HeaderVwData) ProcessHttpRequest(w http.ResponseWriter, r *http.Request) *HeaderVwData{
+func (m *HeaderVwData) ProcessHttpRequest(w http.ResponseWriter, event constants.AppEvent) *HeaderVwData{
+	fmt.Println("[headervw] - Processing request")
 	return m
 }
 
