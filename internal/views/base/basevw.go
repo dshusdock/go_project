@@ -2,7 +2,7 @@ package base
 
 import (
 	"dshusdock/go_project/config"
-	"dshusdock/go_project/internal/constants"
+	con "dshusdock/go_project/internal/constants"
 	"dshusdock/go_project/internal/services/session"
 	"encoding/gob"
 	"fmt"
@@ -10,27 +10,6 @@ import (
 	"net/http"
 )
 
-type BaseTemplateparams struct {
-	LoggedIn 					bool
-	DisplayLogin  				bool
-	DisplayCreateAccount 		bool
-	DisplayCreatAcctResponse 	bool
-	SideNav	      				bool
-	MainTable	  				bool
-	Cards		  				bool
-}
-
-func GetBaseTemplateObj() BaseTemplateparams{
-	return BaseTemplateparams{
-		LoggedIn: false,
-		DisplayLogin: true,
-		DisplayCreateAccount: false,
-		DisplayCreatAcctResponse: false,
-		SideNav: false,
-		MainTable: false,
-		Cards: false,
-	}
-}
 
 ///////////////////// Base View //////////////////////
 type BaseVw struct {
@@ -52,7 +31,7 @@ func (m *BaseVw) RegisterView(app *config.AppConfig) *BaseVw {
 	return AppBaseVw
 }
 
-func (m *BaseVw) RegisterHandler() constants.ViewHandler {
+func (m *BaseVw) RegisterHandler() con.ViewHandler {
 	return &BaseVw{}
 }
 
@@ -67,7 +46,7 @@ func (m *BaseVw) RegisterHandler() constants.ViewHandler {
 // }
 
 // func (m *BaseVw) HandleRequest(w http.ResponseWriter, r *http.Request, c chan any, d chan int) {
-func (m *BaseVw) HandleRequest(w http.ResponseWriter, event constants.AppEvent) any{	
+func (m *BaseVw) HandleRequest(w http.ResponseWriter, event con.AppEvent) any{	
 	fmt.Println("[basevw] - HandleRequest")
 	var obj BaseVwData
 
@@ -87,21 +66,21 @@ func (m *BaseVw) HandleRequest(w http.ResponseWriter, event constants.AppEvent) 
 ///////////////////// Base View Data //////////////////////
 
 type BaseVwData struct {
-	Base BaseTemplateparams
+	Base con.BaseTemplateparams
 	Data any
 	View int
 }
 
 func CreateBaseVwData() *BaseVwData {
 	return &BaseVwData{
-		Base: GetBaseTemplateObj(),
+		Base: *con.GetBaseTemplateObj(""),
 		Data: nil,
 	}
 }
 
-func (m *BaseVwData) ProcessHttpRequest(w http.ResponseWriter, event constants.AppEvent) *BaseVwData{
+func (m *BaseVwData) ProcessHttpRequest(w http.ResponseWriter, event con.AppEvent) *BaseVwData{
 	fmt.Println("[basevw] - Processing request")
-	m.View = constants.RM_HOME
+	m.View = con.RM_HOME
 	return m // TEMPORARY
 }
 

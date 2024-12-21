@@ -30,7 +30,6 @@ func routes(app *config.AppConfig) http.Handler {
 	
 	// Unprotected routes
 	mux.Get("/", handlers.Repo.Base)
-
 	mux.Post("/element/event/click", handlers.Repo.HandleClickEvents)
 
 	fileServer := http.FileServer(http.Dir("./ui/html/"))

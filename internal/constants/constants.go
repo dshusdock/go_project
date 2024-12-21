@@ -58,16 +58,6 @@ type RowData struct {
 	Data []string
 }
 
-// /////////////Rendered File Map///////////////
-const (
-	RM_HOME = iota
-	RM_NONE
-)
-
-type RenderedFileMap struct {
-	HOME           []string
-	NONE           []string
-}
 
 type AppEvent struct {
 	ViewId 		string
@@ -79,19 +69,10 @@ type AppEvent struct {
 
 }
 
-func RENDERED_FILE_MAP() *RenderedFileMap {
-	return &RenderedFileMap{
-		HOME: []string{
-			"./ui/html/views/base.tmpl",
-			"./ui/html/views/layout.tmpl",
-			"./ui/html/views/header.tmpl",
-		},
-		NONE: []string{
-			"",	
-		},
-	}
+type RenderInfo struct {
+	TemplateName  string
+	TemplateFiles []string
 }
-
 
 
 

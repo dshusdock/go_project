@@ -2,18 +2,12 @@ package layoutvw
 
 import (
 	"dshusdock/go_project/config"
-	"dshusdock/go_project/internal/constants"
-	//"dshusdock/go_project/internal/services/messagebus"
-	"dshusdock/go_project/internal/services/session"	
-	b "dshusdock/go_project/internal/views/base"
-	
+	con "dshusdock/go_project/internal/constants"
+	"dshusdock/go_project/internal/services/session"		
 	"encoding/gob"
-
-	// "dshusdock/tw_prac1/internal/services/messagebus"
 	"fmt"
 	"log"
 	"net/http"
-	// "net/url"
 )
 
 type LayoutVw struct {
@@ -36,7 +30,7 @@ func (m *LayoutVw) RegisterView(app *config.AppConfig) *LayoutVw{
 	return AppLayoutVw
 }
 
-func (m *LayoutVw) RegisterHandler() constants.ViewHandler {
+func (m *LayoutVw) RegisterHandler() con.ViewHandler {
 	return &LayoutVw{}
 }
 
@@ -52,7 +46,7 @@ func (m *LayoutVw) RegisterHandler() constants.ViewHandler {
 // 	return nil
 // }
 
-func (m *LayoutVw) HandleRequest(w http.ResponseWriter, event constants.AppEvent) any {
+func (m *LayoutVw) HandleRequest(w http.ResponseWriter, event con.AppEvent) any {
 	fmt.Println("[LayoutVw] - HandleRequest")
 	var obj LayoutVwData
 
@@ -71,7 +65,7 @@ func (m *LayoutVw) HandleRequest(w http.ResponseWriter, event constants.AppEvent
 ///////////////////// Layout View Data //////////////////////
 
 type LayoutVwData struct {
-	Base b.BaseTemplateparams
+	Base con.BaseTemplateparams
 	Data any
 	View int
 }
@@ -82,12 +76,12 @@ type AppLytVwData struct {
 
 func CreateLayoutVwData() *LayoutVwData {
 	return &LayoutVwData{
-		Base: b.GetBaseTemplateObj(),
+		Base: *con.GetBaseTemplateObj(""),
 		Data: nil,
 	}
 }
 
-func (m *LayoutVwData) ProcessHttpRequest(w http.ResponseWriter, event constants.AppEvent) *LayoutVwData{
+func (m *LayoutVwData) ProcessHttpRequest(w http.ResponseWriter, event con.AppEvent) *LayoutVwData{
 	return m
 }
 

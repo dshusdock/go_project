@@ -47,18 +47,13 @@ func (m *Repository) Base(w http.ResponseWriter, r *http.Request) {
 	// ptr := m.App.ViewCache["loginvw"]
 	// ptr.HandleHttpRequest(w, r)	
 
-	renderview.RenderViewSvc.ProcessRequest(w, r, "basevw")
+	renderview.RenderViewSvc.ProcessInit(w, r)
 
 }
 
 func (m *Repository) HandleClickEvents(w http.ResponseWriter, r *http.Request) {
 	val := m.App.SessionManager.Get(r.Context(), "LoggedIn")	
 	fmt.Println("[Handlers] Logged In -  ", val)
-
-	// if val != true {
-	// 	http.Redirect(w, r, "/", http.StatusSeeOther)
-	// 	return
-	// } 
 	
 	err := r.ParseForm()
 	if err != nil {
@@ -73,19 +68,7 @@ func (m *Repository) HandleClickEvents(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-
-	renderview.RenderViewSvc.ProcessClickEvent(w, 
-		constants.AppEvent{
-			ViewId: v_id,
-			Type:   data.Get("type"),
-			Label:  data.Get("label"),
-			EventId: constants.EVENT_CLICK,
-			EventStr: v_id + "_" + data.Get("type") + "_" + data.Get("label"),
-			Context: r.Context(),
-		},
-	)
-
-	//renderview.RenderViewSvc.ProcessRequest(w, r, v_id)
+	renderview.RenderViewSvc.ProcessClickEvent(w, r)
 }
 
 

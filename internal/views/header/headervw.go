@@ -2,10 +2,9 @@ package headervw
 
 import (
 	"dshusdock/go_project/config"
-	"dshusdock/go_project/internal/constants"
+	con "dshusdock/go_project/internal/constants"
 	//"dshusdock/go_project/internal/services/messagebus"
 	"dshusdock/go_project/internal/services/session"	
-	b "dshusdock/go_project/internal/views/base"
 	
 	"encoding/gob"
 
@@ -36,7 +35,7 @@ func (m *HeaderVw) RegisterView(app *config.AppConfig) *HeaderVw{
 	return AppHeaderVw
 }
 
-func (m *HeaderVw) RegisterHandler() constants.ViewHandler {
+func (m *HeaderVw) RegisterHandler() con.ViewHandler {
 	return &HeaderVw{}
 }
 
@@ -52,7 +51,7 @@ func (m *HeaderVw) RegisterHandler() constants.ViewHandler {
 // 	return nil
 // }
 
-func (m *HeaderVw) HandleRequest(w http.ResponseWriter, event constants.AppEvent) any{
+func (m *HeaderVw) HandleRequest(w http.ResponseWriter, event con.AppEvent) any{
 	fmt.Println("[HeaderVw] - HandleRequest")
 	var obj HeaderVwData
 
@@ -71,7 +70,7 @@ func (m *HeaderVw) HandleRequest(w http.ResponseWriter, event constants.AppEvent
 ///////////////////// Layout View Data //////////////////////
 
 type HeaderVwData struct {
-	Base b.BaseTemplateparams
+	Base con.BaseTemplateparams
 	Data any
 	View int
 }
@@ -82,12 +81,12 @@ type AppLytVwData struct {
 
 func CreateHeaderVwData() *HeaderVwData {
 	return &HeaderVwData{
-		Base: b.GetBaseTemplateObj(),
+		Base: *con.GetBaseTemplateObj(""),
 		Data: nil,
 	}
 }
 
-func (m *HeaderVwData) ProcessHttpRequest(w http.ResponseWriter, event constants.AppEvent) *HeaderVwData{
+func (m *HeaderVwData) ProcessHttpRequest(w http.ResponseWriter, event con.AppEvent) *HeaderVwData{
 	fmt.Println("[headervw] - Processing request")
 	return m
 }

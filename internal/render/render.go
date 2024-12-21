@@ -58,3 +58,8 @@ func RenderTemplate_new(w http.ResponseWriter, r *http.Request, data any, _type 
 	}
 	template.Must(template.ParseFiles(tmplFiles...)).ExecuteTemplate(w, tmplName, data)
 }
+
+func RenderAppTemplate(w http.ResponseWriter, r *http.Request, data any, _type int) {
+	info := constants.GetRenderInfo(_type)
+	template.Must(template.ParseFiles(info.TemplateFiles...)).ExecuteTemplate(w, info.TemplateName, data)
+}	
